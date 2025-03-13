@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -7,13 +7,10 @@ import FormControl from '@mui/material/FormControl';
 
 const SelectDropdown = (props) => {
 
-  const {listItems, placeholder, setSelected} = props;
-
-  const [selectedItem, setSelectedItem] = useState(undefined);
-
+  const {listItems, placeholder, setSelected, selected} = props;
   const handleChange = (event) => {
-    setSelectedItem(event.target.value);
-    setSelected && setSelected(event.target.value);
+    const selectedObject = listItems.find(item => item.id === event.target.value);
+    setSelected && setSelected(selectedObject);
   };
 
   return (
@@ -21,7 +18,7 @@ const SelectDropdown = (props) => {
       <InputLabel className="label">{placeholder}</InputLabel>
       <Select
         className='select-dropdown'
-        value={selectedItem}
+        value={selected?.id || ''}
         label={placeholder}
         onChange={handleChange}
         style={{width: '300px'}}
