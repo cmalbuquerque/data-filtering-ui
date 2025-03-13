@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import SelectDropdown from './components/select-dropdown/SelectDropdown';
+import FormControl from '@mui/material/FormControl';
 
-function App() {
+const App = () => {
+
+const listItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <FormControl fullWidth>
+        <SelectDropdown className="property-selection" placeholder="Select a property" listItems={listItems} />
+      </FormControl>
+      
     </div>
   );
 }
