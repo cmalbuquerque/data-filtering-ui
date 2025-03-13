@@ -3,6 +3,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import PropTypes from 'prop-types';
+import FormControl from '@mui/material/FormControl';
 
 const SelectDropdown = (props) => {
 
@@ -16,20 +17,20 @@ const SelectDropdown = (props) => {
   };
 
   return (
-    <>
-    <InputLabel className="label">{placeholder}</InputLabel>
-    <Select
-      className='select-dropdown'
-      value={selectedItem}
-      label={placeholder}
-      onChange={handleChange}
-      style={{width: '300px'}}
-      >
-        {listItems && listItems.map((item, index) => {
-          return <MenuItem key={index} value={item}>{item}</MenuItem>
-        })}
-    </Select>
-  </>);
+    <FormControl fullWidth>
+      <InputLabel className="label">{placeholder}</InputLabel>
+      <Select
+        className='select-dropdown'
+        value={selectedItem}
+        label={placeholder}
+        onChange={handleChange}
+        style={{width: '300px'}}
+        >
+          {listItems && listItems.map((item) => {
+            return <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
+          })}
+      </Select>
+    </FormControl>);
 
 };
 
