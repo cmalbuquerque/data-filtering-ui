@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Datatable from './components/datatable/Datatable';
 import useDataStore from './hooks/useDataStore';
 import { getSupportedOperators } from './utils/operatorTypeMapper';
+import { applyFilter } from './utils/filterUtils';
 
 const App = () => {
   const { properties, operators, products, rawProducts } = useDataStore();
@@ -14,12 +15,14 @@ const App = () => {
   const [operatorValues, setOperatorValues] = useState([]);
   const [filteredOperators, setFilteredOperators] = useState(operators);
   const [selectedOperatorValue, setSelectedOperatorValue] = useState(undefined);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   const clearFilters = () => {
-    selectedOperator && setSelectedOperator(undefined);
-    selectedProperty && setSelectedProperty(undefined);
-    selectedOperatorValue && setSelectedOperatorValue(undefined);
+    setSelectedOperator(undefined);
+    setSelectedProperty(undefined);
+    setSelectedOperatorValue(undefined);
     setFilteredOperators(operators);
+    setFilteredProducts(products);
   };
 
   useEffect(() => {
@@ -31,16 +34,27 @@ const App = () => {
       const matchingValues = rawProducts
         .flatMap(product => product.property_values)
         .filter(propertyValue => propertyValue.property_id === propertyId)
-        .map(propertyValue => ({  
+        .map((propertyValue, index) => ({  
+          id: index,
           name: propertyValue.value,
-          id: propertyValue.propertyId}));
+          }));
         
       const uniqueValues = Array.from(new Map(matchingValues.map(item => [item.name, item])).values());
       setOperatorValues(uniqueValues);
     } else {
       setOperatorValues([]);
     }
-  }, [selectedProperty, products, operators, rawProducts]);
+  }, [selectedProperty, rawProducts, operators]);
+
+  useEffect(() => {
+    if(selectedOperator && selectedProperty && selectedOperatorValue) {
+      const filtered = applyFilter(products, selectedProperty, selectedOperator, selectedOperatorValue);
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [selectedProperty, selectedOperator, selectedOperatorValue, products]);
+
 
   return (
     <div className="App">
@@ -48,11 +62,11 @@ const App = () => {
           <div className="filter-section">
             <SelectDropdown className="property-selection" placeholder="Select property" listItems={properties} setSelected={setSelectedProperty} selected={selectedProperty}/>
             <SelectDropdown className="operator-selection" placeholder="Select operator" listItems={filteredOperators} setSelected={setSelectedOperator} selected={selectedOperator}/>
-            {selectedProperty && selectedOperator && <SelectDropdown className="operator-type-selection" placeholder="" listItems={operatorValues} setSelected={setSelectedOperatorValue} selected={selectedOperatorValue}/>}
+            {selectedProperty && selectedOperator && <SelectDropdown className="operator-type-selection" placeholder="Choose value" listItems={operatorValues} setSelected={setSelectedOperatorValue} selected={selectedOperatorValue}/>}
           </div>
           <Button variant="contained" onClick={clearFilters}>Clear Filters</Button>
         </div>
-        <Datatable headers={properties} data={products} />
+        <Datatable headers={properties} data={filteredProducts} />
     </div>
   );
 }

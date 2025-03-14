@@ -8,18 +8,20 @@ import FormControl from '@mui/material/FormControl';
 const SelectDropdown = (props) => {
 
   const {listItems, placeholder, setSelected, selected} = props;
+
   const handleChange = (event) => {
     const selectedObject = listItems.find(item => item.id === event.target.value);
-    setSelected && setSelected(selectedObject);
+    setSelected(selectedObject);
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel className="label">{placeholder}</InputLabel>
+    <FormControl fullWidth className='form-control'>
+      <InputLabel htmlFor={placeholder} className="label">{placeholder}</InputLabel>
       <Select
         className='select-dropdown'
-        value={selected?.id || ''}
+        value={selected ? selected.id : ''}
         label={placeholder}
+        aria-label={placeholder}
         onChange={handleChange}
         style={{width: '300px'}}
         >

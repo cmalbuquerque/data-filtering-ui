@@ -17,7 +17,7 @@ const Datatable = (props) => {
         <TableHead>
           <TableRow>
             {headers.map((header) => {
-              return <TableCell>{header.name}</TableCell>
+              return <TableCell key={header.id}>{header.name}</TableCell>
             })}
           </TableRow>
       </TableHead>);
