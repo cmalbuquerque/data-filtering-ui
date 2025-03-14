@@ -5,6 +5,7 @@ const useDataStore = () => {
   const [properties, setProperties] = useState([]);
   const [operators, setOperators] = useState([]);
   const [products, setProducts] = useState([]);
+  const [rawProducts, setRawProducts] = useState([]);
 
   useEffect(() => {
     if (window.datastore) {
@@ -22,6 +23,7 @@ const useDataStore = () => {
 
       if (window.datastore.getProducts) {
         const productsData = window.datastore.getProducts();
+        setRawProducts(productsData);
         const mappedProducts = productsData.map(product => {
           const productRow = {};
           product.property_values.forEach(propertyValue => {
@@ -37,7 +39,7 @@ const useDataStore = () => {
     }
   }, []);
 
-  return { properties, operators, products };
+  return { properties, operators, products, rawProducts };
 };
 
 export default useDataStore;

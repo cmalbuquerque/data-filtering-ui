@@ -1,49 +1,58 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import SelectDropdown from './components/select-dropdown/SelectDropdown';
 import './data/datastore';
-import {parseProperties, parseOperators} from './utils/parsers';
 import Button from '@mui/material/Button';
+import Datatable from './components/datatable/Datatable';
+import useDataStore from './hooks/useDataStore';
+import { getSupportedOperators } from './utils/operatorTypeMapper';
 
 const App = () => {
-
-  const [properties, setProperties] = useState([]);
+  const { properties, operators, products, rawProducts } = useDataStore();
   const [selectedProperty, setSelectedProperty] = useState(undefined);
-  const [operators, setOperators] = useState([]);
   const [selectedOperator, setSelectedOperator] = useState(undefined);
-  const [operatorTypes, setOperatorTypes] = useState([]);
-  const [selectedOperatorType, setSelectedOperatorType] = useState(undefined);
+  const [operatorValues, setOperatorValues] = useState([]);
+  const [filteredOperators, setFilteredOperators] = useState(operators);
+  const [selectedOperatorValue, setSelectedOperatorValue] = useState(undefined);
 
   const clearFilters = () => {
     selectedOperator && setSelectedOperator(undefined);
     selectedProperty && setSelectedProperty(undefined);
-    selectedOperatorType && setSelectedOperatorType(undefined);
-  }
+    selectedOperatorValue && setSelectedOperatorValue(undefined);
+    setFilteredOperators(operators);
+  };
 
   useEffect(() => {
-  if (window.datastore) {
-        if (window.datastore.getProperties) {
-          const propertiesData = window.datastore.getProperties();
-          setProperties(parseProperties(propertiesData));
-        }
-
-        if (window.datastore.getOperators) {
-          const operatorsData = window.datastore.getOperators();
-          setOperators(parseOperators(operatorsData));
-        }
-      }
-  }, []);
+    if(selectedProperty) {
+      const supportedOperatorIds = getSupportedOperators(selectedProperty.type);
+      const filteredOperators = operators.filter(operator => supportedOperatorIds.includes(operator.id));      
+      setFilteredOperators(filteredOperators);
+      const propertyId = selectedProperty.id;
+      const matchingValues = rawProducts
+        .flatMap(product => product.property_values)
+        .filter(propertyValue => propertyValue.property_id === propertyId)
+        .map(propertyValue => ({  
+          name: propertyValue.value,
+          id: propertyValue.propertyId}));
+        
+      const uniqueValues = Array.from(new Map(matchingValues.map(item => [item.name, item])).values());
+      setOperatorValues(uniqueValues);
+    } else {
+      setOperatorValues([]);
+    }
+  }, [selectedProperty, products, operators, rawProducts]);
 
   return (
     <div className="App">
         <div className="filter-container">
           <div className="filter-section">
             <SelectDropdown className="property-selection" placeholder="Select property" listItems={properties} setSelected={setSelectedProperty} selected={selectedProperty}/>
-            <SelectDropdown className="operator-selection" placeholder="Select operator" listItems={operators} setSelected={setSelectedOperator} selected={selectedOperator}/>
-            {operatorTypes.length > 0 && <SelectDropdown className="operator-type-selection" placeholder="" listItems={[operatorTypes]} setSelected={setSelectedProperty} selected={selectedOperator}/>}
+            <SelectDropdown className="operator-selection" placeholder="Select operator" listItems={filteredOperators} setSelected={setSelectedOperator} selected={selectedOperator}/>
+            {selectedProperty && selectedOperator && <SelectDropdown className="operator-type-selection" placeholder="" listItems={operatorValues} setSelected={setSelectedOperatorValue} selected={selectedOperatorValue}/>}
           </div>
           <Button variant="contained" onClick={clearFilters}>Clear Filters</Button>
         </div>
+        <Datatable headers={properties} data={products} />
     </div>
   );
 }
