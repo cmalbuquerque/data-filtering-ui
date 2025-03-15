@@ -84,3 +84,8 @@ The process of building the UI involved several steps, as documented in the comm
 
 
 Unit tests and some functional tests were added during the development of components and utils.
+
+
+## Time Spent 
+
+In total, it was spent arround 6-7 hours where 1 hour was dedicated to documention and demo.
