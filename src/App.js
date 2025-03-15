@@ -5,8 +5,7 @@ import './data/datastore';
 import Button from '@mui/material/Button';
 import Datatable from './components/datatable/Datatable';
 import useDataStore from './hooks/useDataStore';
-import { getSupportedOperators } from './utils/operatorTypeMapper';
-import { applyFilter } from './utils/filterUtils';
+import { applyFilter, getSupportedOperators } from './utils/filterUtils';
 
 const App = () => {
   const { properties, operators, products, rawProducts } = useDataStore();

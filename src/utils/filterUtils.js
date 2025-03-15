@@ -1,3 +1,12 @@
+export const getSupportedOperators = (type) => {
+  const operatorTypeMapper = {
+    string: ['equals', 'any', 'none', 'in', 'contains'],
+    number: ['equals', 'greater_than', 'less_than'],
+    enumerated: ['equals', 'any', 'none', 'in']
+  };
+  return operatorTypeMapper[type] || [];
+};
+
 export const applyFilter = (products, selectedProperty, selectedOperator, selectedOperatorValue) => {
   if (!selectedProperty || !selectedOperator || !selectedOperatorValue) {
     return products;
