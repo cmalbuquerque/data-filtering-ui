@@ -59,6 +59,14 @@ describe('applyFilter', () => {
         const result = applyFilter(products, { name: 'category' }, { id: 'any' }, { name: ['Electronics', 'Clothing'] });
         expect(result).toEqual(products);
     });
+
+    test('should filter products by any operator with single value', () => {
+        const result = applyFilter(products, { name: 'category' }, { id: 'any' }, { name: 'Electronics' });
+        expect(result).toEqual([
+            { name: 'Product 1', price: 100, category: 'Electronics' },
+            { name: 'Product 3', price: 150, category: 'Electronics' },
+        ]);
+    });
 });
 
 describe('operatorTypeMapper', () => {

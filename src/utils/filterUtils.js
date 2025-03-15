@@ -31,15 +31,21 @@ export const applyFilter = (products, selectedProperty, selectedOperator, select
       );
     case 'in':
       return products.filter(product => 
-        selectedOperatorValue.name.includes(product[selectedProperty.name])
+        Array.isArray(selectedOperatorValue.name) 
+          ? selectedOperatorValue.name.includes(product[selectedProperty.name])
+          : selectedOperatorValue.name === product[selectedProperty.name]
       );
     case 'none':
       return products.filter(product => 
-        !selectedOperatorValue.name.includes(product[selectedProperty.name])
+        Array.isArray(selectedOperatorValue.name) 
+          ? !selectedOperatorValue.name.includes(product[selectedProperty.name])
+          : selectedOperatorValue.name !== product[selectedProperty.name]
       );
     case 'any':
       return products.filter(product => 
-        selectedOperatorValue.name.some(value => value === product[selectedProperty.name])
+        Array.isArray(selectedOperatorValue.name) 
+          ? selectedOperatorValue.name.some(value => value === product[selectedProperty.name])
+          : selectedOperatorValue.name === product[selectedProperty.name]
       );
     default:
       return products;
