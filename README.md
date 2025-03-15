@@ -2,6 +2,8 @@
 
 This project is a data filtering user interface built with React. It allows users to filter data based on selected properties, operators, and values, and displays the filtered data in a table.
 
+Loom Video Explanation: https://www.loom.com/share/289e0a47b0ad405b88b51922b289020d?sid=2729ed26-fdbf-44ee-8d2b-5a14cee696d7
+
 ![Data Filtering UI](./demo/demo.gif)
 
 ## Key Features
