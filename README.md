@@ -13,19 +13,6 @@ This project is a data filtering user interface built with React. It allows user
 - ✅ **Unit Tests**: The application includes unit tests to ensure the filtering logic works correctly.
 
 
-## Purpose
-
-The purpose of this application is to provide a dynamic and interactive way to filter and display data. Users can select a property, choose an operator, and specify a value to filter the data accordingly.
-
-## Key Features
-
-- 🔍 **Dynamic Filtering**: Users can filter data based on selected properties, operators, and values.
-- 📊 **Dynamic Table Columns**: The table is built dynamically based on the properties existing in the datastore, meaning the number of columns is dynamic.
-- 🧹 **Clear Filters**: Users can clear all filters and reset the data table to its original state.
-- ✅ **Unit Tests**: The application includes unit tests to ensure the filtering logic works correctly.
-
-
-
 ## Running the Project for the First Time
 
 To run the project for the first time, follow these steps:
