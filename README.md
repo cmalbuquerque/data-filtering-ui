@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Data Filtering UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a data filtering user interface built with React. It allows users to filter data based on selected properties, operators, and values, and displays the filtered data in a table.
 
-## Available Scripts
 
-In the project directory, you can run:
+![Data Filtering UI](./demo/demo.gif)
 
-### `npm start`
+## Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🔍 **Dynamic Filtering**: Users can filter data based on selected properties, operators, and values.
+- 📊 **Dynamic Table Columns**: The table is built dynamically based on the properties existing in the datastore, meaning the number of columns is dynamic.
+- 🧹 **Clear Filters**: Users can clear all filters and reset the data table to its original state.
+- ✅ **Unit Tests**: The application includes unit tests to ensure the filtering logic works correctly.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+
+## Purpose
+
+The purpose of this application is to provide a dynamic and interactive way to filter and display data. Users can select a property, choose an operator, and specify a value to filter the data accordingly.
+
+## Key Features
+
+- 🔍 **Dynamic Filtering**: Users can filter data based on selected properties, operators, and values.
+- 📊 **Dynamic Table Columns**: The table is built dynamically based on the properties existing in the datastore, meaning the number of columns is dynamic.
+- 🧹 **Clear Filters**: Users can clear all filters and reset the data table to its original state.
+- ✅ **Unit Tests**: The application includes unit tests to ensure the filtering logic works correctly.
+
+
+
+## Running the Project for the First Time
+
+To run the project for the first time, follow these steps:
+
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/cmalbuquerque/data-filtering-ui.git
+    cd data-filtering-ui
+    ```
+
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
+
+3. **Start the application**:
+    ```sh
+    npm start
+    ```
+
+4. **Access the application**:
+    Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+
+
+### Running tests
 
 ### `npm test`
+
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Process of Building the UI
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The process of building the UI involved several steps, as documented in the commit messages. Here is an overview of the key steps:
 
-### `npm run eject`
+1. **Initial Setup**:
+    - Repository creation
+    - Bootstrapped the project with Create React App.
+    - Set up the basic structure of the React application.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Adding mock datastore file**:
+    - Added the file provided with mocked data
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Creating components and fetching data**:
+    - Created the reusable `SelectDropdown` component to handle property, operator, and value selection.
+    - Created an custom react hook to fetch the properties, operators and product data from file.
+    - Get operator values based on properties selected and based on products content in order to only display values included in datastore.
+    - Populate property, operator and value selection dropdowns with the fetched data
+    - Created the reusable `Datatable` component to display the data.
+    - Render `Datatable` with properties values as data table headers and raw products data fetched via `useDataStore` hook.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Implementing Clear Filters**:
+    - Added a "Clear Filters" button to reset all filters and restore the original data.
+    - Updated the state management to handle filter clearing.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Implementing Filtering Functionality**:
+    - Created a mapper between properties types and supported filtering operations.
+    - Create `filterUtils` to handle with data filtering based on property type. 
+    - Filter products data passed to data table based on selected filter.
 
-## Learn More
+6. **Refactoring and Optimization**:
+    - Refactored the code to improve readability and maintainability.
+    - Adjust CSS
+    - Optimized the filtering logic and fix some issues detected
+    - Updated the README file to provide clear instructions and documentation.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Unit tests and some functional tests were added during the development of components and utils.
