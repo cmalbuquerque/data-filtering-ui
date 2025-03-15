@@ -2,7 +2,6 @@
 
 This project is a data filtering user interface built with React. It allows users to filter data based on selected properties, operators, and values, and displays the filtered data in a table.
 
-
 ![Data Filtering UI](./demo/demo.gif)
 
 ## Key Features
@@ -73,8 +72,8 @@ The process of building the UI involved several steps, as documented in the comm
     - Updated the state management to handle filter clearing.
 
 5. **Implementing Filtering Functionality**:
-    - Created a mapper between properties types and supported filtering operations.
-    - Create `filterUtils` to handle with data filtering based on property type. 
+    - Created a mapper between properties types and supported filtering operations. I assumed, for example, the number type only made sense to allow filters operator of type equals, less than and greater than.
+    - Create `filterUtils` to handle with data filtering based on property type. Also, the selection dropdown only shows the supported operators for the selected property based on created mapper. 
     - Filter products data passed to data table based on selected filter.
 
 6. **Refactoring and Optimization**:
